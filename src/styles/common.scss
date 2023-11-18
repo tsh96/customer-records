@@ -1,0 +1,23 @@
+:deep(.input-red) {
+  color: red;
+}
+
+:deep(.input-green) {
+  color: green;
+}
+
+:deep(.input-grey) {
+  color: grey;
+}
+
+:deep() {
+  table {
+    font-family: Consolas, 'Courier New', Courier, monospace;
+  }
+}
+
+:deep() {
+  table td {
+    padding: 0.25rem 0.5rem;
+  }
+}
