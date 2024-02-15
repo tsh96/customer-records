@@ -48,6 +48,7 @@ const customerAccount = computed(() => {
   return customerAccount
 })
 
+const yearFilter = ref(new Date().getFullYear())
 
 watch(() => customerAccount.value?.items, (items) => {
   if (!items) return
@@ -193,7 +194,7 @@ const chequeDateFilter = ref<[number, number]>()
 
 const filteredCustomerItems = computed(() => {
   if (!customerAccount.value) return []
-  const items = customerAccount.value.items
+  const items = customerAccount.value.items.filter(item => item.invoiceDate && startOfYear(item.invoiceDate).getFullYear() === yearFilter.value)
   if (!invoiceDateFilter.value && !chequeDateFilter.value) return items
   return items.filter(item => {
     if (invoiceDateFilter.value) {
@@ -402,6 +403,9 @@ function upload() {
         n-badge(:value="pendingInvoices.count" type="error")
           n-button(@click="showPendingInvoicesModal=true" type="error" :disabled="!pendingInvoices.count") #[.i-carbon-document] Pending Invoices
   .flex.gap-x-2.py-2.items-center
+    .text-xl Year:
+    n-input-number.font-mono(v-model:value="yearFilter" min="1900" max="3000" style="width: 180px;" placeholder="Year")
+    n-divider(vertical)
     .text-xl Customer:
     n-select(v-model:value="customerRecords.selectedCustomerName" :options="customersOption" size="large" filterable clearable)
     n-button(v-if="customerAccount" @click="showUpdateCustomerForm()" type="info") Update Customer
