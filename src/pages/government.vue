@@ -411,7 +411,7 @@ function upload() {
           n-button(@click="showPendingInvoicesModal=true" type="error" :disabled="!pendingInvoices.count") #[.i-carbon-document] Pending Invoices
   .flex.gap-x-2.py-2.items-center
     .text-xl Year:
-    n-input-number.font-mono(v-model:value="yearFilter" min="1900" max="3000" style="width: 180px;" placeholder="Year")
+    n-input-number.font-mono(v-model:value="yearFilter" min="1900" max="3000" style="width: 180px; min-width: 180px;" placeholder="Year")
     n-divider(vertical)
     .text-xl Customer:
     n-select(v-model:value="customerRecords.selectedCustomerName" :options="customersOption" size="large" filterable clearable)
