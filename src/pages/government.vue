@@ -197,7 +197,7 @@ const lpoDateFilter = ref<[number, number]>()
 
 const filteredCustomerItems = computed(() => {
   if (!customerAccount.value) return []
-  const items = customerAccount.value.items.filter(item => item.lpoDate && startOfYear(item.lpoDate).getFullYear() === yearFilter.value)
+  const items = customerAccount.value.items.filter(item => !item.lpoDate || startOfYear(item.lpoDate).getFullYear() === yearFilter.value)
   if (!invoiceDateFilter.value && !chequeDateFilter.value) return items
   return items.filter(item => {
     if (invoiceDateFilter.value) {
