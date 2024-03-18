@@ -17,7 +17,6 @@ type CustomerAccountItem = {
   id: string
   invoiceDate: number | null,
   invoiceNo: string,
-  lpo: string,
   invoiceAmount: number,
   chequeDate: number | null,
   chequeNo: string,
@@ -64,7 +63,6 @@ function addItem() {
     id: uuidv4(),
     invoiceDate: null,
     invoiceNo: '',
-    lpo: '',
     invoiceAmount: 0,
     chequeDate: null,
     chequeNo: '',
@@ -427,7 +425,6 @@ function upload() {
                     n-button(text) #[.i-carbon-filter]
                 n-date-picker(v-model:value="invoiceDateFilter" type="daterange" clearable)
           th.w-50.min-w-50 Invoice No.
-          th.w-50.min-w-50 LPO
           th.w-50.min-w-50 Amt #[n-tag(type="success") SUM: {{ format(sumBy(filteredCustomerItems, item => item.invoiceAmount)) }}]
           th.w-38.min-w-38
             .flex.gap-x-2 Date
@@ -459,8 +456,6 @@ function upload() {
               n-date-picker(v-model:value="item.invoiceDate" type="date" size="small" clearable)
             td
               n-input(v-model:value="item.invoiceNo" size="small")
-            td
-              n-input(v-model:value="item.lpo" size="small")
             td.text-right
               n-input-number(
                 v-model:value="item.invoiceAmount"

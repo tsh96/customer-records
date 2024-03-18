@@ -17,8 +17,6 @@ type CustomerAccountItem = {
   id: string
   invoiceDate: number | null,
   invoiceNo: string,
-  lpoDate: number | null,
-  lpo: string,
   invoiceAmount: number,
   chequeDate: number | null,
   chequeNo: string,
@@ -65,8 +63,6 @@ function addItem() {
     id: uuidv4(),
     invoiceDate: null,
     invoiceNo: '',
-    lpoDate: null,
-    lpo: '',
     invoiceAmount: 0,
     chequeDate: null,
     chequeNo: '',
@@ -193,11 +189,10 @@ function dropItem(index: number) {
 
 const invoiceDateFilter = ref<[number, number]>()
 const chequeDateFilter = ref<[number, number]>()
-const lpoDateFilter = ref<[number, number]>()
 
 const filteredCustomerItems = computed(() => {
   if (!customerAccount.value) return []
-  const items = customerAccount.value.items.filter(item => !item.lpoDate || startOfYear(item.lpoDate).getFullYear() === yearFilter.value)
+  const items = customerAccount.value.items.filter(item => !item.invoiceDate || startOfYear(item.invoiceDate).getFullYear() === yearFilter.value)
   if (!invoiceDateFilter.value && !chequeDateFilter.value) return items
   return items.filter(item => {
     if (invoiceDateFilter.value) {
@@ -207,10 +202,6 @@ const filteredCustomerItems = computed(() => {
     if (chequeDateFilter.value) {
       if (!item.chequeDate) return false
       if (item.chequeDate < chequeDateFilter.value[0] || item.chequeDate > chequeDateFilter.value[1]) return false
-    }
-    if (lpoDateFilter.value) {
-      if (!item.lpoDate) return false
-      if (item.lpoDate < lpoDateFilter.value[0] || item.lpoDate > lpoDateFilter.value[1]) return false
     }
     return true
   })
@@ -430,14 +421,6 @@ function upload() {
             .flex.gap-x-2 Date
               n-popover(trigger="click")
                 template(#trigger)
-                  n-badge(:show="!!lpoDateFilter" dot)
-                    n-button(text) #[.i-carbon-filter]
-                n-date-picker(v-model:value="lpoDateFilter" type="daterange" clearable)
-          th.w-50.min-w-50 LPO
-          th.w-38.min-w-38
-            .flex.gap-x-2 Date
-              n-popover(trigger="click")
-                template(#trigger)
                   n-badge(:show="!!invoiceDateFilter" dot)
                     n-button(text) #[.i-carbon-filter]
                 n-date-picker(v-model:value="invoiceDateFilter" type="daterange" clearable)
@@ -469,10 +452,6 @@ function upload() {
             :key="item.id"
           )
             td.cursor-move(@mousedown="draggableRow = i") {{ i+1 }}
-            td
-              n-date-picker(v-model:value="item.lpoDate" type="date" size="small" clearable)
-            td
-              n-input(v-model:value="item.lpo" size="small")
             td
               n-date-picker(v-model:value="item.invoiceDate" type="date" size="small" clearable)
             td
