@@ -29,7 +29,7 @@
     "@unocss/reset": "^0.56.5",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vue-macros/volar": "^0.17.0",
-    "@vue/language-plugin-pug": "^1.8.19",
+    "@vue/language-plugin-pug": "^2.0.6",
     "@vue/test-utils": "^2.4.1",
     "eslint": "^8.52.0",
     "jsdom": "^22.1.0",
